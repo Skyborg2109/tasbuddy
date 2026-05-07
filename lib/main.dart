@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:taskbuddy_new/core/theme/app_theme.dart';
 import 'package:taskbuddy_new/features/splash/pages/splash_screen.dart';
@@ -14,13 +15,23 @@ void main() async {
   await initializeDateFormatting('id_ID', null); // inisialisasi locale Indonesia
   try {
     await Firebase.initializeApp(
-      options: const FirebaseOptions(
-        apiKey: 'AIzaSyA7pRmhUfrESH3Bv3Vl_SprDv1Hl2f_m9Q',
-        appId: '1:214650731637:android:d480540447c0eb44000c3c',
-        messagingSenderId: '214650731637',
-        projectId: 'finalwilly-8b446',
-        storageBucket: 'finalwilly-8b446.firebasestorage.app',
-      ),
+      options: kIsWeb
+          ? const FirebaseOptions(
+              apiKey: 'AIzaSyBvbMwkOZbk0ac5ozek55zrzApdQWKL8E',
+              appId: '1:214650731637:web:63d02f35accef054000c3c',
+              messagingSenderId: '214650731637',
+              projectId: 'finalwilly-8b446',
+              authDomain: 'finalwilly-8b446.firebaseapp.com',
+              storageBucket: 'finalwilly-8b446.firebasestorage.app',
+              measurementId: 'G-FQ1DC4LYTX',
+            )
+          : const FirebaseOptions(
+              apiKey: 'AIzaSyA7pRmhUfrESH3Bv3Vl_SprDv1Hl2f_m9Q',
+              appId: '1:214650731637:android:d480540447c0eb44000c3c',
+              messagingSenderId: '214650731637',
+              projectId: 'finalwilly-8b446',
+              storageBucket: 'finalwilly-8b446.firebasestorage.app',
+            ),
     );
     debugPrint("Firebase initialized successfully");
   } catch (e) {
