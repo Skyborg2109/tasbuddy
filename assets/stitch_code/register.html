@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Register | TaskBuddy</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error-container": "#65000b",
+                    "on-tertiary-container": "#632012",
+                    "background": "#fffbff",
+                    "surface-container-highest": "#ece8dd",
+                    "tertiary-fixed": "#ffa08b",
+                    "tertiary-dim": "#8f4130",
+                    "inverse-surface": "#0f0e0c",
+                    "on-surface": "#393830",
+                    "outline": "#828177",
+                    "on-background": "#393830",
+                    "secondary": "#98522c",
+                    "on-secondary-container": "#81401b",
+                    "primary-fixed-dim": "#9bdada",
+                    "surface-bright": "#fffbff",
+                    "error-dim": "#70030f",
+                    "secondary-container": "#ffdbcb",
+                    "on-tertiary": "#ffffff",
+                    "error": "#b33938",
+                    "surface-dim": "#e6e3d5",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-container": "#ffa08b",
+                    "surface-container-high": "#f1eee4",
+                    "on-primary-container": "#105758",
+                    "surface-container": "#f7f3eb",
+                    "primary-container": "#a9e8e8",
+                    "on-error": "#ffffff",
+                    "inverse-on-surface": "#9f9c98",
+                    "inverse-primary": "#b7f7f6",
+                    "primary-dim": "#1f6162",
+                    "primary": "#2e6e6e",
+                    "secondary-fixed": "#ffdbcb",
+                    "on-secondary": "#ffffff",
+                    "surface-variant": "#ece8dd",
+                    "on-secondary-fixed-variant": "#8d4924",
+                    "on-tertiary-fixed": "#450a01",
+                    "tertiary-fixed-dim": "#f4917b",
+                    "surface-tint": "#2e6e6e",
+                    "error-container": "#f56965",
+                    "on-primary-fixed-variant": "#1e6161",
+                    "outline-variant": "#bcb9af",
+                    "on-surface-variant": "#66655c",
+                    "tertiary": "#9e4c3a",
+                    "on-primary-fixed": "#004344",
+                    "surface": "#fffbff",
+                    "surface-container-low": "#fdf9f2",
+                    "secondary-fixed-dim": "#ffc9b0",
+                    "on-primary": "#ffffff",
+                    "secondary-dim": "#894621",
+                    "on-tertiary-fixed-variant": "#6f291a",
+                    "primary-fixed": "#a9e8e8",
+                    "on-secondary-fixed": "#692e0a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.5rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Plus Jakarta Sans"],
+                    "label": ["Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .task-bubble-clip {
+            border-radius: 60% 40% 70% 30% / 30% 60% 40% 70%;
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-surface-container-low text-on-surface min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<main class="flex-grow flex items-center justify-center px-6 py-12">
+<div class="w-full max-w-md">
+<!-- Hero Aesthetic Section -->
+<div class="mb-10 text-center relative">
+<div class="absolute -top-12 -left-8 w-24 h-24 bg-secondary-container/30 task-bubble-clip blur-2xl"></div>
+<div class="absolute top-0 -right-4 w-16 h-16 bg-primary-container/40 task-bubble-clip blur-xl"></div>
+<h2 class="text-3xl font-extrabold text-on-surface tracking-tight mb-2">Create Account</h2>
+<p class="text-on-surface-variant text-sm font-medium max-w-xs mx-auto">Join our community and start curating your time with warm precision.</p>
+</div>
+<!-- Registration Form Card -->
+<div class="bg-surface-container-lowest p-8 rounded-[2rem] shadow-[0_4px_32px_rgba(57,56,48,0.04)] relative overflow-hidden border border-surface-container/50">
+<form class="space-y-5">
+<!-- Name Input -->
+<div class="space-y-2">
+<label class="block text-[11px] font-bold uppercase tracking-widest text-on-surface-variant ml-1">Full Name</label>
+<div class="relative">
+<input class="w-full bg-surface-container-high/50 border-none rounded-2xl px-5 py-4 text-on-surface placeholder:text-outline/60 focus:ring-2 focus:ring-primary/20 transition-all outline-none text-sm" placeholder="Janice Thompson" type="text"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline/40 text-lg" data-icon="person">person</span>
+</div>
+</div>
+<!-- Email Input -->
+<div class="space-y-2">
+<label class="block text-[11px] font-bold uppercase tracking-widest text-on-surface-variant ml-1">Email</label>
+<div class="relative">
+<input class="w-full bg-surface-container-high/50 border-none rounded-2xl px-5 py-4 text-on-surface placeholder:text-outline/60 focus:ring-2 focus:ring-primary/20 transition-all outline-none text-sm" placeholder="hello@taskbuddy.com" type="email"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline/40 text-lg" data-icon="mail">mail</span>
+</div>
+</div>
+<!-- Password Input -->
+<div class="space-y-2">
+<label class="block text-[11px] font-bold uppercase tracking-widest text-on-surface-variant ml-1">Password</label>
+<div class="relative">
+<input class="w-full bg-surface-container-high/50 border-none rounded-2xl px-5 py-4 text-on-surface placeholder:text-outline/60 focus:ring-2 focus:ring-primary/20 transition-all outline-none text-sm" placeholder="••••••••" type="password"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline/40 text-lg" data-icon="lock">lock</span>
+</div>
+</div>
+<!-- Primary CTA -->
+<div class="pt-4">
+<button class="w-full bg-primary text-white font-bold py-5 rounded-full shadow-lg shadow-primary/10 hover:opacity-90 active:scale-95 transition-all duration-200 text-base" type="submit">
+                            Join TaskBuddy
+                        </button>
+</div>
+</form>
+<div class="mt-8 flex justify-center items-center gap-4">
+<div class="h-[1px] flex-grow bg-outline-variant/30"></div>
+<span class="text-[10px] font-bold text-outline/60 uppercase tracking-[0.2em]">Or</span>
+<div class="h-[1px] flex-grow bg-outline-variant/30"></div>
+</div>
+<div class="mt-6 text-center">
+<p class="text-on-surface-variant text-xs">
+                        Already have an account? 
+                        <a class="text-primary font-bold hover:underline underline-offset-4 ml-1" href="#">Login</a>
+</p>
+</div>
+</div>
+<!-- Visual Trust Anchor -->
+<div class="mt-12 flex justify-around items-center opacity-30 grayscale">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-lg" data-icon="shield">shield</span>
+<span class="text-[9px] font-bold tracking-widest uppercase">Privacy</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-lg" data-icon="cloud">cloud</span>
+<span class="text-[9px] font-bold tracking-widest uppercase">Sync</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-lg" data-icon="verified_user">verified_user</span>
+<span class="text-[9px] font-bold tracking-widest uppercase">Secure</span>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<!-- Visual Background Enhancements -->
+<div class="fixed top-[-10%] right-[-5%] w-[400px] h-[400px] bg-secondary-container/10 rounded-full blur-[120px] -z-10"></div>
+<div class="fixed bottom-[-5%] left-[-10%] w-[300px] h-[300px] bg-primary-container/15 rounded-full blur-[100px] -z-10"></div>
+</body></html>

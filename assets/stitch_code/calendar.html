@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TaskBuddy - Calendar View</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#ffa08b",
+                        "secondary-container": "#ffdbcb",
+                        "on-error-container": "#65000b",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#1e6161",
+                        "surface-container": "#f7f3eb",
+                        "on-secondary": "#ffffff",
+                        "background": "#fffbff",
+                        "primary-container": "#a9e8e8",
+                        "primary-fixed-dim": "#9bdada",
+                        "on-primary-fixed": "#004344",
+                        "surface-dim": "#e6e3d5",
+                        "on-primary-container": "#105758",
+                        "surface-container-high": "#f1eee4",
+                        "inverse-surface": "#0f0e0c",
+                        "on-secondary-container": "#81401b",
+                        "surface-tint": "#2e6e6e",
+                        "on-surface": "#393830",
+                        "secondary-fixed-dim": "#ffc9b0",
+                        "error-container": "#f56965",
+                        "on-tertiary-container": "#632012",
+                        "on-surface-variant": "#66655c",
+                        "surface-bright": "#fffbff",
+                        "outline-variant": "#bcb9af",
+                        "tertiary": "#9e4c3a",
+                        "on-tertiary": "#ffffff",
+                        "primary-dim": "#1f6162",
+                        "tertiary-fixed": "#ffa08b",
+                        "on-secondary-fixed": "#692e0a",
+                        "primary-fixed": "#a9e8e8",
+                        "inverse-primary": "#b7f7f6",
+                        "on-background": "#393830",
+                        "error": "#b33938",
+                        "on-tertiary-fixed": "#450a01",
+                        "secondary-dim": "#894621",
+                        "surface-container-low": "#fdf9f2",
+                        "surface": "#fffbff",
+                        "surface-container-highest": "#ece8dd",
+                        "on-primary": "#ffffff",
+                        "primary": "#2e6e6e",
+                        "outline": "#828177",
+                        "secondary": "#98522c",
+                        "error-dim": "#70030f",
+                        "tertiary-fixed-dim": "#f4917b",
+                        "surface-variant": "#ece8dd",
+                        "on-tertiary-fixed-variant": "#6f291a",
+                        "on-secondary-fixed-variant": "#8d4924",
+                        "tertiary-dim": "#8f4130",
+                        "secondary-fixed": "#ffdbcb",
+                        "inverse-on-surface": "#9f9c98",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-[#fffbff]/80 backdrop-blur-xl docked full-width top-0 sticky z-50 flex justify-between items-center px-6 py-4 w-full">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center overflow-hidden">
+<img alt="Sarah" class="w-full h-full object-cover" data-alt="professional portrait of a young woman with a friendly smile, soft natural lighting, minimalist background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsShyQuZuNTXCBtUoCFSQFok0CHPXE6TMtOmiUxCytkKJyq7qC2BjboK5OVaBiErcza0obB2iYZj_yaz8fu6s1BcO98CG0gK3a1WYzz3_ShONkgM6Dow75pGtpjVYsonOIe4Bd8H6_HPvg2-x-SJ6SUUCFbqaULbFiFrv7pzdIvHwAmpAFolJASOsmQf6N07i97_usoIDTO_BZqNToBwriU6dOVY4Q_MnajJWZAMUoiqEE9zLhQ5exaVRjoKiFeW4N4KgtX5h9954"/>
+</div>
+<h1 class="text-[#2e6e6e] font-['Plus_Jakarta_Sans'] font-semibold text-lg tracking-tight">Hello, Sarah!</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[#f7f3eb]/50 transition-opacity duration-300">
+<span class="material-symbols-outlined text-[#393830]">notifications</span>
+</button>
+</header>
+<main class="flex-1 px-6 pt-4 pb-32">
+<!-- Monthly Header -->
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-2xl font-bold text-on-surface tracking-tight">September 2024</h2>
+<div class="flex gap-2">
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Weekly Strip -->
+<div class="flex justify-between items-center mb-10 overflow-x-auto hide-scrollbar py-2">
+<div class="flex flex-col items-center gap-2 min-w-[3.5rem]">
+<span class="text-xs font-medium text-on-surface-variant tracking-widest">MON</span>
+<div class="w-12 h-16 flex flex-col items-center justify-center rounded-2xl bg-surface-container-low">
+<span class="text-lg font-bold">16</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-2 min-w-[3.5rem]">
+<span class="text-xs font-medium text-on-surface-variant tracking-widest">TUE</span>
+<div class="w-12 h-16 flex flex-col items-center justify-center rounded-2xl bg-surface-container-low">
+<span class="text-lg font-bold">17</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-2 min-w-[3.5rem]">
+<span class="text-xs font-medium text-primary font-bold tracking-widest">WED</span>
+<div class="w-12 h-16 flex flex-col items-center justify-center rounded-2xl bg-primary text-white shadow-lg shadow-primary/20">
+<span class="text-lg font-bold">18</span>
+<div class="w-1 h-1 bg-white rounded-full mt-1"></div>
+</div>
+</div>
+<div class="flex flex-col items-center gap-2 min-w-[3.5rem]">
+<span class="text-xs font-medium text-on-surface-variant tracking-widest">THU</span>
+<div class="w-12 h-16 flex flex-col items-center justify-center rounded-2xl bg-surface-container-low">
+<span class="text-lg font-bold">19</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-2 min-w-[3.5rem]">
+<span class="text-xs font-medium text-on-surface-variant tracking-widest">FRI</span>
+<div class="w-12 h-16 flex flex-col items-center justify-center rounded-2xl bg-surface-container-low">
+<span class="text-lg font-bold">20</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-2 min-w-[3.5rem]">
+<span class="text-xs font-medium text-on-surface-variant tracking-widest">SAT</span>
+<div class="w-12 h-16 flex flex-col items-center justify-center rounded-2xl bg-surface-container-low">
+<span class="text-lg font-bold">21</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-2 min-w-[3.5rem]">
+<span class="text-xs font-medium text-on-surface-variant tracking-widest">SUN</span>
+<div class="w-12 h-16 flex flex-col items-center justify-center rounded-2xl bg-surface-container-low">
+<span class="text-lg font-bold">22</span>
+</div>
+</div>
+</div>
+<!-- Task List Title -->
+<div class="flex justify-between items-end mb-6">
+<div>
+<h3 class="text-lg font-bold text-on-surface">Today's Schedule</h3>
+<p class="text-sm text-on-surface-variant">4 tasks remaining</p>
+</div>
+<button class="text-primary font-bold text-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">add</span> Add Task
+            </button>
+</div>
+<!-- Tasks Timeline -->
+<div class="space-y-4">
+<!-- Task 1: Focus Block -->
+<div class="relative pl-12">
+<div class="absolute left-4 top-0 bottom-0 w-px bg-outline-variant/30"></div>
+<div class="absolute left-[13px] top-2 w-2 h-2 rounded-full border-2 border-primary bg-background"></div>
+<div class="bg-surface-container p-5 rounded-[1.5rem] flex flex-col gap-3 transition-transform hover:scale-[1.01] duration-300">
+<div class="flex justify-between items-start">
+<div>
+<span class="text-[10px] font-bold tracking-[0.1em] text-primary uppercase mb-1 block">9:00 AM — 10:30 AM</span>
+<h4 class="text-base font-bold text-on-surface">Morning Deep Work</h4>
+</div>
+<span class="material-symbols-outlined text-primary" data-weight="fill" style="font-variation-settings: 'FILL' 1;">stars</span>
+</div>
+<p class="text-sm text-on-surface-variant leading-relaxed">Focus on the UI Design System and component architecture for the new project.</p>
+</div>
+</div>
+<!-- Task 2: Meeting -->
+<div class="relative pl-12">
+<div class="absolute left-4 top-0 bottom-0 w-px bg-outline-variant/30"></div>
+<div class="absolute left-[13px] top-2 w-2 h-2 rounded-full border-2 border-tertiary bg-background"></div>
+<div class="bg-surface-container-low p-5 rounded-[1.5rem] flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div>
+<span class="text-[10px] font-bold tracking-[0.1em] text-tertiary uppercase mb-1 block">11:00 AM — 12:00 PM</span>
+<h4 class="text-base font-bold text-on-surface">Product Sync Meeting</h4>
+</div>
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full border-2 border-surface-container-low bg-slate-200 overflow-hidden">
+<img alt="Team member" data-alt="headshot of a man with glasses, professional creative style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCi4UKW7jSQ-BdHLoYITQH-Nmxshm6TPQwNa46i2kgMVTescAS59dDXJYqlyVH-KXpjpGjzjDB3hkXxvcgDeD4WA4VMpmQAo9CF53HpAZ_uo5s3MDcizXT3hovuriGpEm-EMPzoEQjIDxV8RH5SnO-noa6jRXdU6XcxcCGuqiOyIyBybTj6a8yPIGdQEVoCH4_szK3KAiq9aRJrUipVZF0jzjfytjO7DbVI8zGE1H6EX0Kl0Ubil8B7eJu8ZWHxLNGh3npOHjXZ7tU"/>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-surface-container-low bg-slate-300 overflow-hidden">
+<img alt="Team member" data-alt="professional woman portrait, corporate minimal style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC95mfIVg7DBAVAnAJuZzsTBkqMK4qc17c3nfmYqK-fnVOw0zUAJm4t36yQYkSh3mCEHvvGLX8hgWTCE0SaoNID9zDNt_XR5DNLxfDtM-lHgzvdBgkM7FJCmj3OQAETnpqmEFYBUsPF9bBEykcSkLm-RZ39zsbi92zt4oB6HmXWIi0zTi1P9XQgA3Q0FS7Q6ap-5bWZh_aIXrOEirCOpW3OwoBFbJhJt4U40VLeCKPh8fFMRLptiiys0z5aohYylbXwR1TinC0n004"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Task 3: Lunch (Break) -->
+<div class="relative pl-12">
+<div class="absolute left-4 top-0 bottom-0 w-px bg-outline-variant/30"></div>
+<div class="absolute left-[13px] top-2 w-2 h-2 rounded-full border-2 border-outline-variant bg-background"></div>
+<div class="flex items-center gap-4 py-2">
+<span class="text-[10px] font-bold tracking-[0.1em] text-on-surface-variant uppercase">12:00 PM — 1:00 PM</span>
+<div class="h-px flex-1 bg-outline-variant/20"></div>
+<span class="material-symbols-outlined text-on-surface-variant text-lg">restaurant</span>
+</div>
+</div>
+<!-- Task 4: Design Review -->
+<div class="relative pl-12">
+<div class="absolute left-4 top-0 bottom-0 w-px bg-outline-variant/30"></div>
+<div class="absolute left-[13px] top-2 w-2 h-2 rounded-full border-2 border-primary bg-background"></div>
+<div class="bg-surface-container p-5 rounded-[1.5rem] flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div>
+<span class="text-[10px] font-bold tracking-[0.1em] text-primary uppercase mb-1 block">1:30 PM — 3:00 PM</span>
+<h4 class="text-base font-bold text-on-surface">Design Review</h4>
+</div>
+<span class="px-2 py-1 bg-secondary-container text-on-secondary-container text-[10px] font-bold rounded-full">URGENT</span>
+</div>
+<p class="text-sm text-on-surface-variant leading-relaxed">Review the latest prototypes with the engineering team.</p>
+</div>
+</div>
+<!-- Task 5: Gym -->
+<div class="relative pl-12">
+<div class="absolute left-4 top-0 bottom-0 w-px bg-outline-variant/30"></div>
+<div class="absolute left-[13px] top-2 w-2 h-2 rounded-full border-2 border-secondary bg-background"></div>
+<div class="bg-secondary-container/30 p-5 rounded-[1.5rem] flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div>
+<span class="text-[10px] font-bold tracking-[0.1em] text-secondary uppercase mb-1 block">5:00 PM — 6:30 PM</span>
+<h4 class="text-base font-bold text-on-surface">Workout Session</h4>
+</div>
+<span class="material-symbols-outlined text-secondary">fitness_center</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-8 pb-6 pt-3 bg-[#fdf9f2] shadow-[0_-4px_24px_rgba(57,56,48,0.04)] rounded-t-[2rem]">
+<a class="flex flex-col items-center justify-center text-[#393830]/50 p-3 hover:bg-[#ece8dd] transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium tracking-wide mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#393830]/50 p-3 hover:bg-[#ece8dd] transition-colors" href="#">
+<span class="material-symbols-outlined">assignment_turned_in</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium tracking-wide mt-1">Tasks</span>
+</a>
+<!-- Active Item: Calendar -->
+<a class="flex flex-col items-center justify-center bg-[#2e6e6e] text-white rounded-full p-3 scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#393830]/50 p-3 hover:bg-[#ece8dd] transition-colors" href="#">
+<span class="material-symbols-outlined">query_stats</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[10px] font-medium tracking-wide mt-1">Stats</span>
+</a>
+</nav>
+</body></html>

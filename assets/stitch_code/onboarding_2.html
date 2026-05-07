@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TaskBuddy Onboarding - Focus and Flow</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#fdf9f2",
+                        "surface": "#fffbff",
+                        "outline-variant": "#bcb9af",
+                        "on-secondary-fixed": "#692e0a",
+                        "on-primary-fixed-variant": "#1e6161",
+                        "primary-fixed-dim": "#9bdada",
+                        "on-surface": "#393830",
+                        "background": "#fffbff",
+                        "secondary": "#98522c",
+                        "error-container": "#f56965",
+                        "surface-tint": "#2e6e6e",
+                        "on-surface-variant": "#66655c",
+                        "tertiary-dim": "#8f4130",
+                        "inverse-primary": "#b7f7f6",
+                        "tertiary": "#9e4c3a",
+                        "outline": "#828177",
+                        "secondary-container": "#ffdbcb",
+                        "on-secondary-container": "#81401b",
+                        "surface-bright": "#fffbff",
+                        "on-tertiary-container": "#632012",
+                        "secondary-fixed-dim": "#ffc9b0",
+                        "primary": "#2e6e6e",
+                        "surface-container": "#f7f3eb",
+                        "on-secondary-fixed-variant": "#8d4924",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed": "#ffa08b",
+                        "secondary-dim": "#894621",
+                        "surface-dim": "#e6e3d5",
+                        "inverse-on-surface": "#9f9c98",
+                        "on-tertiary-fixed": "#450a01",
+                        "on-tertiary": "#ffffff",
+                        "on-background": "#393830",
+                        "error-dim": "#70030f",
+                        "on-tertiary-fixed-variant": "#6f291a",
+                        "surface-container-high": "#f1eee4",
+                        "secondary-fixed": "#ffdbcb",
+                        "primary-fixed": "#a9e8e8",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#ece8dd",
+                        "tertiary-container": "#ffa08b",
+                        "primary-container": "#a9e8e8",
+                        "inverse-surface": "#0f0e0c",
+                        "on-primary-container": "#105758",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed": "#004344",
+                        "surface-container-highest": "#ece8dd",
+                        "error": "#b33938",
+                        "primary-dim": "#1f6162",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#f4917b",
+                        "on-error-container": "#65000b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>body {
+    font-family: "Plus Jakarta Sans", sans-serif
+    }
+.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }
+.grainy-texture {
+    position: relative
+    }
+.grainy-texture::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuATouSFpvYIttyMcm3gXD9yCMiR2iLKgQUFvVBwVb2Yl6GrW-zWmrlc4l5iTH4DD3JT_QkNftPZHdCdq_vaxyj4RaJ6y3WieeOqyL-WSYI8H_BE2fY45ZDeF-nooztutp78DD6F5frUNOAYlaJ6qKtKD4bKBiXlMNBY0Wkb083eVuX7qS4hMMcARk6ATyCJm-PcyWKPLj1lnsd6Yv3qZvgq2SGAMqvtgS8f9vZNqnoIhAzbeuNzwr_gtvba8YYdEEYq-OAjXrTBwEo);
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 10
+    }</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background grainy-texture min-h-screen flex flex-col">
+<!-- Top Navigation (Contextual Suppression of Main Shell) -->
+<header class="flex justify-between items-center px-8 pt-8 pb-4">
+<div class="text-primary font-extrabold text-xl tracking-tight">TaskBuddy</div>
+<button class="text-on-surface-variant font-medium text-sm hover:text-on-surface transition-colors">Skip</button>
+</header>
+<!-- Main Onboarding Content Canvas -->
+<main class="flex-grow flex flex-col items-center justify-center px-8 space-y-10">
+<!-- Artistic Illustration Section -->
+<div class="relative w-full aspect-square max-w-[340px] flex items-center justify-center">
+<!-- Organic Shape Background -->
+<div class="absolute inset-0 bg-surface-container rounded-[3rem] rotate-3"></div>
+<div class="absolute inset-0 bg-secondary-container/30 rounded-[3.5rem] -rotate-2"></div>
+<!-- Hero Illustration -->
+<img class="relative z-20 w-4/5 h-4/5 object-contain" data-alt="Artistic hand-drawn illustration of a person meditating in a lush teal garden under a soft golden sunset glow, ethereal and serene" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZuJnnjQVS0d8GXcdWNhjeqT_54N5XHQ-MVTCs-Ld5xWxfRyWXcPvQTVN1IYINrrdyt1UZ4do7iBv1vh09KQ8BpJ2q3TE9KrXKtfbimRkUe42xZIYWftWDx36p0ZlsWNq-kDt254O4VPj8pGAjscf1jidTim4Rb3uUThheCXIiqsG3K_R0pweT3XA5rbkifDDaEtNMTEMOr-YqdDC35LZkol7hUsNG15DygqrMldzMzD2BnPu1gqN1B_kmcs6FqymaI541FtXiabU"/>
+<!-- Floating UI Elements (Hand-crafted Look) -->
+<div class="absolute -top-4 -right-4 bg-surface-container-highest shadow-sm p-4 rounded-xl rotate-6 z-30">
+<div class="flex flex-col items-center">
+<span class="text-xs font-label uppercase tracking-widest text-on-surface-variant mb-1">Focus</span>
+<span class="text-xl font-bold text-primary">25:00</span>
+<div class="w-12 h-1 bg-outline-variant/20 rounded-full mt-2 overflow-hidden">
+<div class="w-2/3 h-full bg-primary"></div>
+</div>
+</div>
+</div>
+<div class="absolute -bottom-2 -left-4 bg-white/80 backdrop-blur-md p-3 rounded-full flex items-center gap-2 shadow-sm z-30">
+<div class="w-8 h-8 rounded-full bg-tertiary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-tertiary-container text-lg" data-icon="energy_savings_leaf">energy_savings_leaf</span>
+</div>
+<span class="text-xs font-semibold pr-2 text-on-surface">Flow State Active</span>
+</div>
+</div>
+<!-- Typography Section -->
+<div class="text-center space-y-4 max-w-sm">
+<h1 class="text-3xl md:text-4xl font-headline font-extrabold text-on-surface tracking-tight">
+                Focus and Flow
+            </h1>
+<p class="text-on-surface-variant leading-relaxed text-body-md px-2">
+                Master your productivity with our built-in <span class="text-primary font-semibold">Pomodoro timer</span> and insightful analytics that adapt to your rhythm.
+            </p>
+</div>
+<!-- Progress Indicator & Analytical Snippet -->
+<div class="w-full max-w-[280px] bg-surface-container-low p-5 rounded-2xl">
+<div class="flex justify-between items-end mb-3">
+<div class="space-y-1">
+<p class="text-[10px] font-label tracking-widest text-on-secondary-fixed-variant uppercase">Daily Insight</p>
+<p class="text-sm font-bold text-on-surface">Peak focus: 10:00 AM</p>
+</div>
+<span class="material-symbols-outlined text-secondary" data-icon="query_stats">query_stats</span>
+</div>
+<div class="flex gap-1 h-8 items-end">
+<div class="flex-1 bg-primary/20 h-4 rounded-t-sm"></div>
+<div class="flex-1 bg-primary/40 h-6 rounded-t-sm"></div>
+<div class="flex-1 bg-primary h-8 rounded-t-sm"></div>
+<div class="flex-1 bg-primary/60 h-5 rounded-t-sm"></div>
+<div class="flex-1 bg-primary/30 h-3 rounded-t-sm"></div>
+<div class="flex-1 bg-primary/10 h-2 rounded-t-sm"></div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Shell -->
+<footer class="px-8 pb-12 pt-4 flex flex-col items-center space-y-8">
+<!-- Pagination Dots -->
+<div class="flex gap-2.5">
+<div class="w-2 h-2 rounded-full bg-outline-variant/40"></div>
+<div class="w-6 h-2 rounded-full bg-primary"></div>
+<div class="w-2 h-2 rounded-full bg-outline-variant/40"></div>
+</div>
+<!-- Primary Action -->
+<div class="w-full flex justify-between items-center">
+<div class="text-on-surface-variant text-sm font-medium">
+                Step 2 of 3
+            </div>
+<button class="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center shadow-[0_8px_24px_rgba(46,110,110,0.25)] hover:scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined text-3xl" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</footer>
+<!-- Background Decorative Elements -->
+<div class="fixed top-[-10%] right-[-10%] w-64 h-64 bg-secondary-container/20 rounded-full blur-[80px] -z-10"></div>
+<div class="fixed bottom-[-5%] left-[-5%] w-48 h-48 bg-primary-container/20 rounded-full blur-[60px] -z-10"></div>
+</body></html>
