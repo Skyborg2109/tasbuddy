@@ -287,10 +287,10 @@ class _LoginPageState extends State<LoginPage> {
                             child: OutlinedButton.icon(
                               onPressed: _isLoading ? null : _handleGoogleLogin,
                               icon: Image.network(
-                                'https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg',
+                                'https://www.gstatic.com/images/branding/product/2x/googleg_96dp.png',
                                 height: 24,
                                 width: 24,
-                                errorBuilder: (context, error, stackTrace) => const Icon(Icons.g_mobiledata, size: 24),
+                                errorBuilder: (context, error, stackTrace) => const Icon(Icons.g_mobiledata, size: 24, color: Colors.blue),
                               ),
                               label: const Text(
                                 'Masuk dengan Google',
