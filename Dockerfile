@@ -29,7 +29,7 @@ COPY . .
 
 # Build web
 RUN flutter pub get
-RUN flutter build web --release
+RUN flutter build web --release --no-tree-shake-icons
 
 # Stage 2: Serve with Nginx
 FROM nginx:stable-alpine
