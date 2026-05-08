@@ -50,6 +50,21 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  void _handleGoogleLogin() async {
+    setState(() => _isLoading = true);
+    try {
+      await _authService.signInWithGoogle();
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(e.toString())),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -266,38 +281,32 @@ class _LoginPageState extends State<LoginPage> {
                           const SizedBox(height: 32),
 
                           // Social Buttons
-                          Row(
-                            children: [
-                              Expanded(
-                                child: OutlinedButton.icon(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.g_mobiledata, size: 24),
-                                  label: const Text('Google'),
-                                  style: OutlinedButton.styleFrom(
-                                    padding: const EdgeInsets.symmetric(vertical: 12),
-                                    side: const BorderSide(color: Colors.black12),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(28),
-                                    ),
-                                  ),
+                          SizedBox(
+                            width: double.infinity,
+                            height: 56,
+                            child: OutlinedButton.icon(
+                              onPressed: _isLoading ? null : _handleGoogleLogin,
+                              icon: Image.network(
+                                'https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg',
+                                height: 24,
+                                width: 24,
+                                errorBuilder: (context, error, stackTrace) => const Icon(Icons.g_mobiledata, size: 24),
+                              ),
+                              label: const Text(
+                                'Masuk dengan Google',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.onSurface,
                                 ),
                               ),
-                              const SizedBox(width: 16),
-                              Expanded(
-                                child: OutlinedButton.icon(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.apple, size: 24),
-                                  label: const Text('Apple'),
-                                  style: OutlinedButton.styleFrom(
-                                    padding: const EdgeInsets.symmetric(vertical: 12),
-                                    side: const BorderSide(color: Colors.black12),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(28),
-                                    ),
-                                  ),
+                              style: OutlinedButton.styleFrom(
+                                side: const BorderSide(color: Colors.black12),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(28),
                                 ),
                               ),
-                            ],
+                            ),
                           ),
                         ],
                       ),
