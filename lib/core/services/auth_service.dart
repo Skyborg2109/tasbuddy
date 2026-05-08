@@ -40,6 +40,10 @@ class AuthService {
   Future<UserCredential?> signInWithGoogle() async {
     try {
       GoogleAuthProvider googleProvider = GoogleAuthProvider();
+      // Force account selection
+      googleProvider.setCustomParameters({
+        'prompt': 'select_account',
+      });
       return await _auth.signInWithPopup(googleProvider);
     } on FirebaseAuthException catch (e) {
       throw _handleAuthException(e);
