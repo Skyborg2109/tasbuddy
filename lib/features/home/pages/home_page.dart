@@ -7,7 +7,9 @@ import '../widgets/category_card.dart';
 import '../widgets/task_card.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/services/task_service.dart';
+import '../../../core/services/category_service.dart';
 import '../../tasks/models/task_model.dart';
+import '../../tasks/models/category_model.dart';
 import '../../tasks/pages/task_list_page.dart';
 import '../../calendar/pages/calendar_page.dart';
 import '../../stats/pages/stats_focus_page.dart';
@@ -200,46 +202,41 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                       const SizedBox(height: 12),
-                      StreamBuilder<List<TaskModel>>(
-                        stream: TaskService().getTasksStream(),
-                        builder: (context, snapshot) {
-                          final tasks = snapshot.data ?? [];
+                      StreamBuilder<List<CategoryModel>>(
+                        stream: CategoryService().getCategories(),
+                        builder: (context, catSnapshot) {
+                          final categories = catSnapshot.data ?? [];
                           
-                          int countByCat(String cat) => tasks.where((t) => t.category == cat).length;
+                          if (categories.isEmpty) {
+                            return const SizedBox.shrink();
+                          }
 
-                          return SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            clipBehavior: Clip.none,
-                            child: Row(
-                              children: [
-                                CategoryCard(
-                                  title: 'Pekerjaan',
-                                  taskCount: '${countByCat('Pekerjaan')} Tugas',
-                                  icon: Icons.work_outline,
-                                  backgroundColor: AppColors.primary,
-                                  foregroundColor: Colors.white,
-                                  iconContainerColor: Colors.white24,
+                          return StreamBuilder<List<TaskModel>>(
+                            stream: TaskService().getTasksStream(),
+                            builder: (context, taskSnapshot) {
+                              final tasks = taskSnapshot.data ?? [];
+                              int countByCat(String cat) => tasks.where((t) => t.category == cat).length;
+
+                              return SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                clipBehavior: Clip.none,
+                                child: Row(
+                                  children: categories.map((cat) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(right: 16),
+                                      child: CategoryCard(
+                                        title: cat.label,
+                                        taskCount: '${countByCat(cat.label)} Tugas',
+                                        icon: cat.icon,
+                                        backgroundColor: cat.color,
+                                        foregroundColor: Colors.white,
+                                        iconContainerColor: Colors.white24,
+                                      ),
+                                    );
+                                  }).toList(),
                                 ),
-                                const SizedBox(width: 16),
-                                CategoryCard(
-                                  title: 'Pribadi',
-                                  taskCount: '${countByCat('Pribadi')} Tugas',
-                                  icon: Icons.person_outline,
-                                  backgroundColor: AppColors.secondaryContainer,
-                                  foregroundColor: AppColors.secondary,
-                                  iconContainerColor: Colors.white.withValues(alpha: 0.5),
-                                ),
-                                const SizedBox(width: 16),
-                                CategoryCard(
-                                  title: 'Belajar',
-                                  taskCount: '${countByCat('Belajar')} Tugas',
-                                  icon: Icons.menu_book_outlined,
-                                  backgroundColor: AppColors.surfaceContainerHigh,
-                                  foregroundColor: AppColors.onSurface,
-                                  iconContainerColor: Colors.white70,
-                                ),
-                              ],
-                            ),
+                              );
+                            }
                           );
                         },
                       ),
