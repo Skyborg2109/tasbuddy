@@ -1,6 +1,9 @@
 # Install Flutter and build the web app
 FROM debian:latest AS build
 
+# Cache bust - forces rebuild when changed: 2026-05-08
+ARG CACHE_BUST=2026-05-08-v2
+
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     curl \
