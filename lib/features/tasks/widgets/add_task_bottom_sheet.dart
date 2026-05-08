@@ -5,6 +5,7 @@ import '../../../core/services/task_service.dart';
 import '../../../core/services/category_service.dart';
 import '../../../core/services/notification_service.dart';
 import '../models/task_model.dart';
+import '../models/category_model.dart';
 import '../../notifications/models/notification_model.dart';
 
 class AddTaskBottomSheet extends StatefulWidget {
@@ -265,12 +266,13 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                   spacing: 16,
                   runSpacing: 16,
                   children: categories.map((cat) {
-                    final isSelected = _selectedCategory == cat['label'];
-                    final Color catColor = cat is Map ? cat['color'] : cat.color;
-                    final IconData catIcon = cat is Map ? cat['icon'] : cat.icon;
+                    final String label = cat is Map ? cat['label'] : (cat as CategoryModel).label;
+                    final isSelected = _selectedCategory == label;
+                    final Color catColor = cat is Map ? cat['color'] : (cat as CategoryModel).color;
+                    final IconData catIcon = cat is Map ? cat['icon'] : (cat as CategoryModel).icon;
 
                     return InkWell(
-                      onTap: () => setState(() => _selectedCategory = cat['label']),
+                      onTap: () => setState(() => _selectedCategory = label),
                       borderRadius: BorderRadius.circular(32),
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -302,7 +304,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                             ),
                             const SizedBox(width: 12),
                             Text(
-                              cat['label'],
+                              label,
                               style: TextStyle(
                                 fontWeight: FontWeight.w700,
                                 color: isSelected ? AppColors.primary : AppColors.onSurface,
