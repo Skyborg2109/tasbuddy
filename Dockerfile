@@ -2,7 +2,7 @@
 FROM debian:latest AS build
 
 # Cache bust - forces rebuild when changed: 2026-05-08
-ARG CACHE_BUST=2026-05-08-v2
+ARG CACHE_BUST=2026-05-08-v3
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
