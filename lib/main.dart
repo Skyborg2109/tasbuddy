@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:taskbuddy_new/core/theme/app_theme.dart';
+import 'package:taskbuddy_new/core/services/category_service.dart';
 import 'package:taskbuddy_new/features/splash/pages/splash_screen.dart';
 import 'package:taskbuddy_new/features/auth/pages/login_page.dart';
 import 'package:taskbuddy_new/features/auth/pages/register_page.dart';
@@ -81,7 +82,10 @@ class _AuthWrapperState extends State<AuthWrapper> {
           });
         }
         setState(() {
-          if (user != null) _hasBeenLoggedIn = true;
+          if (user != null) {
+            _hasBeenLoggedIn = true;
+            CategoryService().seedInitialCategories();
+          }
           _user = user;
           _isLoading = false;
         });

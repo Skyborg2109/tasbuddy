@@ -1,38 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/services/notification_service.dart';
+import '../models/notification_model.dart';
 
 class NotificationPage extends StatelessWidget {
   const NotificationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Dummy notifications data
-    final List<Map<String, dynamic>> notifications = [
-      {
-        'title': 'Selamat Datang di TaskBuddy! 🚀',
-        'desc': 'Mulai kelola tugas harianmu dengan lebih efisien mulai hari ini.',
-        'time': 'Baru saja',
-        'isRead': false,
-        'icon': Icons.celebration,
-        'color': Colors.orange,
-      },
-      {
-        'title': 'Tips Fokus Harian',
-        'desc': 'Gunakan fitur statistik untuk memantau produktivitas mingguanmu.',
-        'time': '2 jam yang lalu',
-        'isRead': true,
-        'icon': Icons.lightbulb_outline,
-        'color': Colors.blue,
-      },
-      {
-        'title': 'Jadwal Kalender Terintegrasi',
-        'desc': 'Sekarang kamu bisa melihat tugas dalam tampilan timeline yang rapi.',
-        'time': 'Kemarin',
-        'isRead': true,
-        'icon': Icons.calendar_today,
-        'color': Colors.green,
-      },
-    ];
+    final NotificationService notificationService = NotificationService();
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -52,22 +29,33 @@ class NotificationPage extends StatelessWidget {
         ),
         actions: [
           TextButton(
-            onPressed: () {},
+            onPressed: () => notificationService.markAllAsRead(),
             child: const Text('Tandai Semua Dibaca'),
           ),
           const SizedBox(width: 8),
         ],
       ),
-      body: notifications.isEmpty
-          ? _buildEmptyState()
-          : ListView.builder(
-              padding: const EdgeInsets.all(24),
-              itemCount: notifications.length,
-              itemBuilder: (context, index) {
-                final item = notifications[index];
-                return _buildNotificationItem(context, item);
-              },
-            ),
+      body: StreamBuilder<List<NotificationModel>>(
+        stream: notificationService.getNotifications(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return _buildEmptyState();
+          }
+
+          final notifications = snapshot.data!;
+          return ListView.builder(
+            padding: const EdgeInsets.all(24),
+            itemCount: notifications.length,
+            itemBuilder: (context, index) {
+              final item = notifications[index];
+              return _buildNotificationItem(context, item, notificationService);
+            },
+          );
+        },
+      ),
     );
   }
 
@@ -92,76 +80,93 @@ class NotificationPage extends StatelessWidget {
     );
   }
 
-  Widget _buildNotificationItem(BuildContext context, Map<String, dynamic> item) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: item['isRead'] 
-          ? AppColors.surfaceContainerLow.withValues(alpha: 0.5)
-          : AppColors.primaryContainer.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(20),
-        border: item['isRead'] 
-          ? null 
-          : Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: item['color'].withValues(alpha: 0.1),
-              shape: BoxShape.circle,
+  Widget _buildNotificationItem(BuildContext context, NotificationModel item, NotificationService service) {
+    String timeStr;
+    final now = DateTime.now();
+    final diff = now.difference(item.time);
+    if (diff.inMinutes < 1) {
+      timeStr = 'Baru saja';
+    } else if (diff.inHours < 1) {
+      timeStr = '${diff.inMinutes} menit yang lalu';
+    } else if (diff.inDays < 1) {
+      timeStr = '${diff.inHours} jam yang lalu';
+    } else {
+      timeStr = DateFormat('dd MMM').format(item.time);
+    }
+
+    return InkWell(
+      onTap: () => service.markAsRead(item.id),
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 16),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: item.isRead 
+            ? AppColors.surfaceContainerLow.withValues(alpha: 0.5)
+            : AppColors.primaryContainer.withValues(alpha: 0.1),
+          borderRadius: BorderRadius.circular(20),
+          border: item.isRead 
+            ? null 
+            : Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: item.color.withValues(alpha: 0.1),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(item.icon, color: item.color, size: 20),
             ),
-            child: Icon(item['icon'], color: item['color'], size: 20),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        item['title'],
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                      ),
-                    ),
-                    if (!item['isRead'])
-                      Container(
-                        width: 8,
-                        height: 8,
-                        decoration: const BoxDecoration(
-                          color: AppColors.primary,
-                          shape: BoxShape.circle,
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          item.title,
+                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                         ),
                       ),
-                  ],
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  item['desc'],
-                  style: TextStyle(
-                    color: AppColors.onSurfaceVariant,
-                    fontSize: 13,
-                    height: 1.4,
+                      if (!item.isRead)
+                        Container(
+                          width: 8,
+                          height: 8,
+                          decoration: const BoxDecoration(
+                            color: AppColors.primary,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                    ],
                   ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  item['time'],
-                  style: TextStyle(
-                    color: AppColors.outline,
-                    fontSize: 11,
+                  const SizedBox(height: 4),
+                  Text(
+                    item.desc,
+                    style: TextStyle(
+                      color: AppColors.onSurfaceVariant,
+                      fontSize: 13,
+                      height: 1.4,
+                    ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 8),
+                  Text(
+                    timeStr,
+                    style: TextStyle(
+                      color: AppColors.outline,
+                      fontSize: 11,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

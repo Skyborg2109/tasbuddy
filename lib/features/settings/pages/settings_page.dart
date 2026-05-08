@@ -3,6 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/services/auth_service.dart';
 import '../../notifications/pages/notification_page.dart';
+import 'edit_profile_page.dart';
+import 'security_page.dart';
+import 'help_center_page.dart';
+import 'about_page.dart';
+import 'category_management_page.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -73,19 +78,30 @@ class SettingsPage extends StatelessWidget {
                   const SizedBox(height: 40),
 
             _buildSectionTitle(context, 'Akun'),
-            _buildSettingItem(Icons.person_outline, 'Edit Profil', () {}),
+            _buildSettingItem(Icons.person_outline, 'Edit Profil', () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfilePage()));
+            }),
             _buildSettingItem(Icons.notifications_outlined, 'Notifikasi', () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const NotificationPage()),
               );
             }),
-            _buildSettingItem(Icons.security, 'Keamanan', () {}),
+            _buildSettingItem(Icons.security, 'Keamanan', () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const SecurityPage()));
+            }),
+            _buildSettingItem(Icons.category_outlined, 'Manajemen Kategori', () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const CategoryManagementPage()));
+            }),
             
             const SizedBox(height: 32),
             _buildSectionTitle(context, 'Lainnya'),
-            _buildSettingItem(Icons.help_outline, 'Pusat Bantuan', () {}),
-            _buildSettingItem(Icons.info_outline, 'Tentang TaskBuddy', () {}),
+            _buildSettingItem(Icons.help_outline, 'Pusat Bantuan', () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const HelpCenterPage()));
+            }),
+            _buildSettingItem(Icons.info_outline, 'Tentang TaskBuddy', () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutPage()));
+            }),
             
             const SizedBox(height: 48),
             // Logout Button
@@ -151,13 +167,15 @@ class SettingsPage extends StatelessWidget {
           TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Batal')),
           TextButton(
             onPressed: () async {
-              Navigator.pop(ctx);
+              Navigator.pop(ctx); // Tutup dialog
               await AuthService().signOut();
               if (context.mounted) {
-                Navigator.of(context).pop(); // Go back from settings
+                // Gunakan pushNamedAndRemoveUntil ke '/' atau hapus semua stack
+                // karena AuthWrapper di main.dart akan menangani perubahan state
+                Navigator.of(context).popUntil((route) => route.isFirst);
               }
             },
-            child: const Text('Keluar', style: TextStyle(color: Colors.red)),
+            child: const Text('Keluar', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
           ),
         ],
       ),

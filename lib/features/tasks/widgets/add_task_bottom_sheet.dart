@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/services/task_service.dart';
+import '../../../core/services/category_service.dart';
+import '../../../core/services/notification_service.dart';
 import '../models/task_model.dart';
+import '../../notifications/models/notification_model.dart';
 
 class AddTaskBottomSheet extends StatefulWidget {
   final TaskModel? task;
@@ -20,6 +23,8 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   late TextEditingController _taskController;
   
   final TaskService _taskService = TaskService();
+  final CategoryService _categoryService = CategoryService();
+  final NotificationService _notificationService = NotificationService();
 
   @override
   void initState() {
@@ -145,6 +150,17 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
           createdAt: DateTime.now(),
         );
         await _taskService.addTask(newTask);
+        
+        // Kirim notifikasi tugas baru
+        await _notificationService.addNotification(NotificationModel(
+          id: '',
+          userId: '', // Handle by service
+          title: 'Tugas Baru Dibuat 📝',
+          desc: 'Tugas "${newTask.title}" telah ditambahkan ke kategori ${newTask.category}.',
+          time: DateTime.now(),
+          iconCode: Icons.add_task.codePoint,
+          colorValue: AppColors.primary.toARGB32(),
+        ));
       }
 
       if (mounted) {
@@ -238,56 +254,67 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
 
             // Category Selection
             _buildLabel('KATEGORI'),
-            Wrap(
-              spacing: 16,
-              runSpacing: 16,
-              children: _categories.map((cat) {
-                final isSelected = _selectedCategory == cat['label'];
-                return InkWell(
-                  onTap: () => setState(() => _selectedCategory = cat['label']),
-                  borderRadius: BorderRadius.circular(32),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                    decoration: BoxDecoration(
-                      color: isSelected
-                          ? cat['container'].withValues(alpha: 0.3)
-                          : AppColors.surfaceContainerHigh,
+            StreamBuilder<List<dynamic>>( // Use dynamic to handle the hardcoded initial if empty
+              stream: _categoryService.getCategories(),
+              builder: (context, snapshot) {
+                final categories = (snapshot.hasData && snapshot.data!.isNotEmpty)
+                    ? snapshot.data!
+                    : _categories; // Fallback to hardcoded if Firestore empty
+
+                return Wrap(
+                  spacing: 16,
+                  runSpacing: 16,
+                  children: categories.map((cat) {
+                    final isSelected = _selectedCategory == cat['label'];
+                    final Color catColor = cat is Map ? cat['color'] : cat.color;
+                    final IconData catIcon = cat is Map ? cat['icon'] : cat.icon;
+
+                    return InkWell(
+                      onTap: () => setState(() => _selectedCategory = cat['label']),
                       borderRadius: BorderRadius.circular(32),
-                      border: isSelected
-                          ? Border.all(color: cat['color'].withValues(alpha: 0.2), width: 2)
-                          : null,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        // Asymmetrical Task Bubble
-                        Container(
-                          width: 32,
-                          height: 32,
-                          decoration: BoxDecoration(
-                            color: cat['color'],
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(14),
-                              topRight: Radius.circular(18),
-                              bottomLeft: Radius.circular(22),
-                              bottomRight: Radius.circular(10),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        decoration: BoxDecoration(
+                          color: isSelected
+                              ? catColor.withValues(alpha: 0.3)
+                              : AppColors.surfaceContainerHigh,
+                          borderRadius: BorderRadius.circular(32),
+                          border: isSelected
+                              ? Border.all(color: catColor.withValues(alpha: 0.2), width: 2)
+                              : null,
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              width: 32,
+                              height: 32,
+                              decoration: BoxDecoration(
+                                color: catColor,
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(14),
+                                  topRight: Radius.circular(18),
+                                  bottomLeft: Radius.circular(22),
+                                  bottomRight: Radius.circular(10),
+                                ),
+                              ),
+                              child: Icon(catIcon, color: Colors.white, size: 16),
                             ),
-                          ),
-                          child: Icon(cat['icon'], color: Colors.white, size: 16),
+                            const SizedBox(width: 12),
+                            Text(
+                              cat['label'],
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: isSelected ? AppColors.primary : AppColors.onSurface,
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(width: 12),
-                        Text(
-                          cat['label'],
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            color: isSelected ? cat['onContainer'] : AppColors.onSurface,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                      ),
+                    );
+                  }).toList(),
                 );
-              }).toList(),
+              },
             ),
             const SizedBox(height: 32),
 
